@@ -24,16 +24,17 @@
         </div>
     </body>
     <script>
-        let repairMap = L.map('repair-map').setView([37.872373, -122.271356], 13);
 
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            maxZoom: 100,
-            id: 'mapbox.streets',
-            accessToken: 'pk.eyJ1Ijoibmljb3ZpYXJuZXMiLCJhIjoiY2pybWxoZDhyMGtsYzQ0cG5hbzkxcTBvbSJ9.kRsk-GE3486XooyZHdYBVw'
-        }).addTo(repairMap);
+        var map = L.map('repair-map').setView([37.872373, -122.271356], 13);
 
-        let marker = L.marker([37.872373, -122.271356]).addTo(repairMap);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        L.marker([37.872373, -122.271356]).addTo(map)
+            .bindPopup('<strong>UC Berkeley Extension:</strong><br> Full Stack Bootcamp.')
+            .openPopup();
+
 
     </script>
 </html>
