@@ -12,28 +12,299 @@
         integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg=="
         crossorigin=""></script>
 
+        <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.js'></script>
+        <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.52.0/mapbox-gl.css' rel='stylesheet' />
+
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+        <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
 
         <script src="location.js"></script>
 
     </head>
     <body>
         <div class="container">
-            <div id="repair-map" style="height:50em"></div>
+            <div class='sidebar float-left'>
+                <div class='heading'>
+                    <h1>Our locations</h1>
+                </div>
+                <div id='listings' class='listings'></div>
+            </div>
+            <div id="map" style="float:left; width: 66.6666%; height:50em; padding: 15px 15px 15px 15px"></div>
         </div>
     </body>
     <script>
 
-        var map = L.map('repair-map').setView([37.872373, -122.271356], 13);
+        var stores = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.252949,
+                            37.858993
+                    ]
+                },
+                    "properties": {
+                        "name": "Phone Repair Hut",
+                        "phoneFormatted": "(510) 379-9769",
+                        "phone": "5103799769",
+                        "address": "2887 College Ave",
+                        "city": "Berkeley",
+                        "country": "United States",
+                        "crossStreet": "at Russel St",
+                        "postalCode": "94705",
+                        "state": "CA"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.252407,
+                            37.848515
+                    ]
+                },
+                    "properties": {
+                        "name": "Berkeley iPhone Repair",
+                        "phoneFormatted": "(510) 214-2349",
+                        "phone": "5102142349",
+                        "address": "6019 College Ave",
+                        "city": "Oakland",
+                        "country": "United States",
+                        "crossStreet": "at College Ave",
+                        "postalCode": "94618",
+                        "state": "CA"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.268060,
+                            37.870985
+                    ]
+                },
+                    "properties": {
+                        "name": "Mobile Kangaroo",
+                        "phoneFormatted": "(510) 509-1877",
+                        "phone": "5105091877",
+                        "address": "133 Berkeley Square",
+                        "city": "Berkeley",
+                        "country": "United States",
+                        "crossStreet": "at Addison St",
+                        "postalCode": "94704",
+                        "state": "CA"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.258960,
+                            37.864177
+                    ]
+                },
+                    "properties": {
+                        "name": "iResurrect Repairs",
+                        "phoneFormatted": "(510) 900-6485",
+                        "phone": "5109006485",
+                        "address": "2556 Telegraph Ave #17",
+                        "city": "Berkeley",
+                        "country": "United States",
+                        "crossStreet": "at Forest Ave",
+                        "postalCode": "94704",
+                        "state": "CA"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.251496,
+                            37.838800
+                    ]
+                },
+                    "properties": {
+                        "name": "Phone Repair Hut",
+                        "phoneFormatted": "(510) 379-9769",
+                        "phone": "5103799769",
+                        "address": "5319 College Ave",
+                        "city": "Berkeley",
+                        "country": "United States",
+                        "crossStreet": "at College Ave",
+                        "postalCode": "94618",
+                        "state": "CA"
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [
+                            -122.268712,
+                            37.880907
+                    ]
+                },
+                    "properties": {
+                        "name": "Phone Repair Hut",
+                        "phoneFormatted": "(510) 379-9769",
+                        "phone": "5103799769",
+                        "address": "2111 Vine St",
+                        "city": "Berkeley",
+                        "country": "United States",
+                        "crossStreet": "at Vine St",
+                        "postalCode": "94709",
+                        "state": "CA"
+                    }
+                }
+            ]};
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+            // This will let you use the .remove() function later on
+            if (!('remove' in Element.prototype)) {
+                Element.prototype.remove = function() {
+                    if (this.parentNode) {
+                    this.parentNode.removeChild(this);
+                    }
+                };
+            }
 
-        L.marker([37.872373, -122.271356]).addTo(map)
-            .bindPopup('<strong>UC Berkeley Extension:</strong><br> Full Stack Bootcamp.')
-            .openPopup();
+            mapboxgl.accessToken = 'pk.eyJ1Ijoibmljb3ZpYXJuZXMiLCJhIjoiY2pybWxoZDhyMGtsYzQ0cG5hbzkxcTBvbSJ9.kRsk-GE3486XooyZHdYBVw';
+            // This adds the map to your page
+            var map = new mapboxgl.Map({
+                // container id specified in the HTML
+                container: 'map',
+                // style URL
+                style: 'mapbox://styles/mapbox/streets-v10',
+                // initial position in [lon, lat] format
+                center: [-122.271356, 37.872373],
+                // initial zoom
+                zoom: 14
+            });
+
+
+            map.on('load', function(e) {
+                // Add the data to your map as a layer
+                map.addLayer({
+                    id: 'locations',
+                    type: 'symbol',
+                    // Add a GeoJSON source containing place coordinates and information.
+                    source: {
+                        type: 'geojson',
+                        data: stores
+                    },
+                layout: {
+                    'icon-image': 'triangle-15',
+                    'icon-allow-overlap': true,
+                }
+            });
+
+            buildLocationList(stores);
+        });
+
+        function buildLocationList(data) {
+            // Iterate through the list of stores
+            for (i = 0; i < data.features.length; i++) {
+                var currentFeature = data.features[i];
+
+                var prop = currentFeature.properties;
+
+                var listings = $('#listings');
+
+                var listing = $(`<div class="item" id="listing${i}">`);
+                listings.append(listing)
+
+                var link = $(`<a href="#" class="title" data-position="${i}" name="${prop.name}" address="${prop.address}" coords="${currentFeature.geometry.coordinates}">`).text(prop.address);
+                listing.append(link)
+
+                var details = $("<div>").text(prop.city + ' · ' + prop.phoneFormatted)
+                listing.append(details)
+
+            }
+        }
+
+        function flyToStore(currentFeature) {
+            if ($(currentFeature).attr("coords")) {
+                map.flyTo({
+                    center: $(currentFeature).attr("coords").split(","),
+                    zoom: 15
+                });
+            } else {
+                map.flyTo({
+                    center: currentFeature.geometry.coordinates,
+                    zoom: 15
+                });
+            }
+        }
+
+        function createPopUp(currentFeature) {
+            var popUps = document.getElementsByClassName('mapboxgl-popup');
+            // Check if there is already a popup on the map and if so, remove it
+            if (popUps[0]) popUps[0].remove();
+            console.log(currentFeature)
+
+            if ($(currentFeature).attr("coords")) {
+                var popup = new mapboxgl.Popup({ closeOnClick: false })
+                    .setLngLat($(currentFeature).attr("coords").split(","))
+                    .setHTML(`<h3>${$(currentFeature).attr("name")}</h3>
+                    <h4>${$(currentFeature).attr("address")}</h4>`)
+                    .addTo(map);
+            } else {
+                var popup = new mapboxgl.Popup({ closeOnClick: false })
+                    .setLngLat(currentFeature.geometry.coordinates)
+                    .setHTML(`<h3>${currentFeature.properties.name}</h3>
+                    <h4>${currentFeature.properties.address}</h4>`)
+                    .addTo(map);
+            }
+
+        } 
+
+
+        // Add an event listener for when a user clicks on the map
+        map.on('click', function(e) {
+        // Query all the rendered points in the view
+            var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
+            if (features.length) {
+                var clickedPoint = features[0];
+                // 1. Fly to the point
+                flyToStore(clickedPoint);
+                // 2. Close all other popups and display popup for clicked store
+                createPopUp(clickedPoint);
+                // 3. Highlight listing in sidebar (and remove highlight for all other listings)
+                var activeItem = document.getElementsByClassName('active');
+                if (activeItem[0]) {
+                    activeItem[0].classList.remove('active');
+                }
+                // Find the index of the store.features that corresponds to the clickedPoint that fired the event listener
+                var selectedFeature = clickedPoint.properties.address;
+
+                for (var i = 0; i < stores.features.length; i++) {
+                    if (stores.features[i].properties.address === selectedFeature) {
+                        selectedFeatureIndex = i;
+                    }
+                }
+            }
+        });
+
+        // Add an event listener for the links in the sidebar listing
+        $(document).on('click', '.title', function(e) {
+            var features = map.queryRenderedFeatures(e.point, { layers: ['locations'] });
+            console.log($(this).attr("coords").split(","))
+            console.log($(this).attr("name"))
+            // // Update the currentFeature to the store associated with the clicked link
+            var clickedListing = features
+            // // 1. Fly to the point associated with the clicked link
+            flyToStore($(this));
+            // // 2. Close all other popups and display popup for clicked store
+            createPopUp($(this));
+        });
 
 
     </script>
