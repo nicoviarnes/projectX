@@ -68,6 +68,7 @@ img.png{
 .card-body {
 		border-width:3px;
 		border-color: white;
+		color: white;
 		/* border-style: dotted; */
 	}
 
@@ -97,3 +98,35 @@ img.png{
 	width:  25px;
 	height: 25px;
   } */
+
+
+  .floating-action-button, ul, li, a {
+	  margin: 5px;
+	  float: left;
+  }
+
+  .center-align {
+	  margin-left: 35%
+  }
+
+  .mobile-fab-tip {
+	position: fixed;
+	right: 85px;
+	padding:0px 0.5rem;
+	text-align: right;
+	background-color: #323232;
+	border-radius: 2px;
+	color: #FFF;
+	width:auto;
+}
+.backdrop {
+	background-color: white
+}
+.material-tooltip {
+	color:black;
+
+}
+
+/* .fixed-action-btn ul {
+	position: inherit;
+} */
