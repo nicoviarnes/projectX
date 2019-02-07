@@ -37,13 +37,8 @@ var view = {
 				'<td>' + appointmentTime + '</td>' +
 				'<td>' + returnTime + '</td>' +
 				'<td>' + storeLocation + '</td>' +
-				'<td>' + ticketNumbewr + '</td>' +
-				// '<td>' + `<button class='delete btn btn-danger' data='${snapshot.key}'>` + '</td>'+
-
-				
-				// '<button class="delete btn btn-danger" data='+ trainKey +'>x</button>'+ 
-				// '<button class="delete btn btn-danger" data='${snapshot.key}'>'
-				// `<button class='delete btn btn-danger' data='${snapshot.key}'>`+
+				'<td>' + ticketNumber + '</td>' +
+		
 				
 				
 				'</tr>'
