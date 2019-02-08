@@ -25,6 +25,9 @@ body {
 .topnav {
     background-color: #1034a6;
     height: 64px;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .top {

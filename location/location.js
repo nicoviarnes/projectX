@@ -1,3 +1,16 @@
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDz630PzDtUl642k6q-R_nZgd9dzQn-Iao",
+    authDomain: "projectx-f4363.firebaseapp.com",
+    databaseURL: "https://projectx-f4363.firebaseio.com",
+    projectId: "projectx-f4363",
+    storageBucket: "projectx-f4363.appspot.com",
+    messagingSenderId: "382252244279"
+  };
+  firebase.initializeApp(config);
+
+  let database = firebase.database()
+
 // This will let you use the .remove() function later on
 if (!("remove" in Element.prototype)) {
   Element.prototype.remove = function() {
@@ -243,7 +256,7 @@ function createPopUp(currentFeature) {
     .setHTML(
       `<h3>${currentFeature.properties.name}</h3>
        <h4>${currentFeature.properties.address}<br>${currentFeature.properties.phoneFormatted}</h4>
-       <button id="${currentFeature.properties.address}" class="nav"><h4>Schedule an Appointment</h4></button>`
+       <button id="${currentFeature.properties.address}" storeName="${currentFeature.properties.name}" class="nav appt"><h4>Schedule an Appointment</h4></button>`
     )
     .addTo(map);
 }
@@ -287,4 +300,16 @@ function buildLocationList(data) {
       this.parentNode.classList.add("active");
     });
   }
+
+  $(document).on("click", ".appt", function(e) {
+    console.log($(this).attr("id"))
+    database.ref().update({
+      apptStore: $(this).attr("storeName"),
+      apptAddress: $(this).attr("id")
+    })
+    window.location.href = "appt.html"
+
+  })
+
+
 }
