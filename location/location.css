@@ -1,5 +1,5 @@
 body {
-  color: #404040;
+  color:black;
   font: 400 15px/22px "Source Sans Pro", "Helvetica Neue", Sans-serif;
   margin: 0;
   padding: 0;
@@ -14,7 +14,7 @@ body {
 
 .nav {
     color: #003152;
-    background-color: white;
+    background-color: black;
     border: none;
     text-align: center;
     text-decoration: none;
@@ -23,17 +23,17 @@ body {
 }
 
 .topnav {
-    background-color: #1034a6;
+    background-color:white;
     height: 64px;
     font-size: 22px;
     font-weight: 400;
-    line-height: 20px;
+    line-height: 40px;
 }
 
 .top {
-    float: right;
+    float: center;
     background-color: #1034a6;
-    margin: 0px 10px 0px 10px;
+    margin: 0px 100px 0px 100px;
     color: white;
 }
 
@@ -41,7 +41,7 @@ body {
   position: absolute;
   width: 33.3333%;
   height: 90%;
-  top: 64px;
+  top: 200px;
   left: 0;
   overflow: hidden;
   border-right: 1px solid #003152;
@@ -55,7 +55,7 @@ body {
   position: absolute;
   left: 33.3333%;
   width: 66.6666%;
-  top: 64px;
+  top: 200px;
   bottom: 0;
 }
 
@@ -88,7 +88,7 @@ a:hover {
 }
 
 .heading {
-  background: #fff;
+  background: rgb(255, 255, 255);
   border-bottom: 1px solid #eee;
   min-height: 60px;
   line-height: 60px;
