@@ -211,21 +211,26 @@
                 console.log("the read failed: " + errorObject.code);
             })
 
-        database.ref().on(
-            'value',
-            function (snapshot) {
-                if (snapshot.val().apptStore != null && snapshot.val().apptAddress != null) {
-                    $("#nameInput").val(snapshot.val().apptStore)
-                    $("#destinationInput").val(snapshot.val().apptAddress)
-                    database.ref().child("apptStore").remove()
-                    database.ref().child("apptAddress").remove()
-                } else {
-                    return
-                }
-            },
-            function (errorObject) {
-                console.log("the read failed: " + errorObject.code);
-            })
+        var s = localStorage.getItem('store');
+        var a = localStorage.getItem('address');
+        $("#nameInput").val(snapshot.val().apptStore)
+        $("#destinationInput").val(snapshot.val().apptAddress)       
+
+        // database.ref().on(
+        //     'value',
+        //     function (snapshot) {
+        //         if (snapshot.val().apptStore != null && snapshot.val().apptAddress != null) {
+        //             $("#nameInput").val(snapshot.val().apptStore)
+        //             $("#destinationInput").val(snapshot.val().apptAddress)
+        //             database.ref().child("apptStore").remove()
+        //             database.ref().child("apptAddress").remove()
+        //         } else {
+        //             return
+        //         }
+        //     },
+        //     function (errorObject) {
+        //         console.log("the read failed: " + errorObject.code);
+        //     })
     </script>
 </body>
 

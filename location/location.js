@@ -303,10 +303,14 @@ function buildLocationList(data) {
 
   $(document).on("click", ".appt", function(e) {
     console.log($(this).attr("id"))
-    database.ref().update({
-      apptStore: $(this).attr("storeName"),
-      apptAddress: $(this).attr("id")
-    })
+    // database.ref().update({
+    //   apptStore: $(this).attr("storeName"),
+    //   apptAddress: $(this).attr("id")
+    // })
+    
+    localStorage.setItem('store', $(this).attr("storeName"));
+    localStorage.setItem('address', $(this).attr("id"));
+
     window.location.href = "appt.html"
 
   })
