@@ -40,8 +40,8 @@ body {
 .sidebar {
   position: absolute;
   width: 33.3333%;
-  height: 90%;
-  top: 200px;
+  height: 70%;
+  top: 250px;
   left: 0;
   overflow: hidden;
   border-right: 1px solid #003152;
@@ -55,8 +55,9 @@ body {
   position: absolute;
   left: 33.3333%;
   width: 66.6666%;
-  top: 200px;
+  top: 250px;
   bottom: 0;
+  
 }
 
 h1 {
@@ -235,4 +236,17 @@ a:hover {
 .mapboxgl-ctrl-geocoder > div {
   min-width: 100%;
   margin-left: 0;
+}
+
+.container_2 {
+  margin-top: -130px;
+}
+
+.display-5 {
+margin-top: -130px;
+
+}
+
+.appt{
+  background: transparent;
 }
